@@ -1,0 +1,66 @@
+<hibernate-mapping>
+  <class name="store.Contact" table="contacts">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="name" name="name" type="java.lang.String"/>
+    <property column="address" name="address" type="java.lang.String"/>
+    <property column="phone" name="phone" type="java.lang.String"/>
+    <property column="email" name="email" type="java.lang.String"/>
+    <many-to-one column="client_id" name="client"/>
+  </class>
+
+  <class name="store.Client" table="clients">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="name" name="name" type="java.lang.String"/>
+    <set name="contacts" lazy="true">
+      <key column="client_id"/>
+      <one-to-many class="store.Contact"/>
+    </set>
+    <set name="contracts" lazy="true">
+      <key column="client"/>
+      <one-to-many class="store.Contract"/>
+    </set>
+  </class>
+
+  <class name="store.Service" table="services">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="name" name="name" type="java.lang.String"/>
+    <property column="price" name="price" type="int"/>
+  </class>
+
+  <class name="store.Contract" table="contracts">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <many-to-one column="client" name="client"/>
+    <many-to-one column="service" name="service"/>
+    <property column="time_start" name="start" type="java.sql.Timestamp"/>
+    <property column="time_end" name="end" type="java.sql.Timestamp"/>
+    <set name="servants" lazy="true" table="contract_servant">
+      <key column="contract"/>
+      <many-to-many class="store.Servant" column="servant"/>
+    </set>
+  </class>
+
+  <class name="store.Servant" table="servants">
+    <id column="id" name="id" type="int">
+      <generator class="increment"/>
+    </id>
+    <property column="name" name="name" type="java.lang.String"/>
+    <property column="address" name="address" type="java.lang.String"/>
+    <property column="phone" name="phone" type="java.lang.String"/>
+    <property column="email" name="email" type="java.lang.String"/>
+    <property column="education_level" name="education_level" type="java.lang.String"/>
+    <property column="position" name="position" type="java.lang.String"/>
+    <set name="contracts" lazy="true" table="contract_servant">
+      <key column="servant"/>
+      <many-to-many class="store.Contract" column="contract"/>
+    </set>
+  </class>
+
+</hibernate-mapping>
