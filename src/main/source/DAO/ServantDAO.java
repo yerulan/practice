@@ -11,69 +11,69 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public class ClientDAO{
+public class ServantDAO{
 
-    public void addClient(Client client) throws SQLException {
+    public void addServant(Servant servant) throws SQLException {
         Session session = null;
         session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
-        session.save(client);
+        session.save(servant);
         session.getTransaction().commit();
         if (session != null && session.isOpen()) {
             session.close();
         }
     }
 
-    public void updateClient(int client_id, Client client) throws SQLException {
+    public void updateServant(int servant_id, Servant servant) throws SQLException {
         Session session = null;
         session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
-        session.update(client);
+        session.update(servant);
         session.getTransaction().commit();
         if (session != null && session.isOpen()) {
             session.close();
         }
     }
 
-    public Client getClientById(int client_id) throws SQLException {
+    public Servant getServantById(int servant_id) throws SQLException {
         Session session = null;
-        Client client = null;
+        Servant servant = null;
         session = Hibernate.getSessionFactory().openSession();
-        client = session.load(Client.class, client_id);
+        servant = session.load(Servant.class, servant_id);
         if (session != null && session.isOpen()) {
             session.close();
         }
-        return client;
+        return servant;
     }
 
-    public Collection getAllClients() throws SQLException {
+    public Collection getAllServants() throws SQLException {
         Session session = null;
-        List clients;
+        List servants;
         session = Hibernate.getSessionFactory().openSession();
-        clients = session.createQuery("from Client").list();
+        servants = session.createQuery("from Servant").list();
         if (session != null && session.isOpen()) {
             session.close();
         }
-        return clients;
+        return servants;
     }
 
-    public void deleteClient(Client client) throws SQLException {
+    public void deleteServant(Servant servant) throws SQLException {
         Session session = null;
         session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
-        session.delete(client);
+        session.delete(servant);
         session.getTransaction().commit();
         if (session != null && session.isOpen()) {
             session.close();
         }
     }
 
-    public Collection getClientsByTime(Date time_start, Date time_end) throws SQLException {
+    public Collection getServantsByTime(Date time_start, Date time_end) throws SQLException {
         Session session = null;
-        List clients;
+        List servants;
         session = Hibernate.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        clients = session.createQuery("select b from Client b inner join b.contracts contract " +
+        servants = session.createQuery("select b from Servant b inner join b.contracts contract " +
                 "where contract.start >= :time_start and " +
                 "contract.end <= :time_end")
                 .setParameter("time_start",time_start)
@@ -83,37 +83,37 @@ public class ClientDAO{
         if (session != null && session.isOpen()) {
             session.close();
         }
-        return clients;
+        return servants;
     }
 
-    public Collection getClientsByServant(Servant servant){
+    public Collection getServantsByClient(Client client){
         Session session = null;
-        List clients;
+        List servants;
         session = Hibernate.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        clients = session.createQuery("select b from Client b inner join b.contracts contract inner join contract.servants" +
-                " servant where servant=:servant ").setParameter("servant", servant)
+        servants = session.createQuery("select b from Servant b inner join b.contracts contract" +
+                " where client=:client ").setParameter("client", client)
                 .list();
         session.getTransaction().commit();
         if (session != null && session.isOpen()) {
             session.close();
         }
-        return clients;
+        return servants;
     }
 
-    public Collection getClientsByService(Service service){
+    public Collection getServantsByService(Service service){
         Session session = null;
-        List clients;
+        List servants;
         session = Hibernate.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        clients = session.createQuery("select b from Client b inner join b.contracts contract" +
+        servants = session.createQuery("select b from Servant b inner join b.contracts contract" +
                 " where service=:service ").setParameter("service", service)
                 .list();
         session.getTransaction().commit();
         if (session != null && session.isOpen()) {
             session.close();
         }
-        return clients;
+        return servants;
     }
 
 }
