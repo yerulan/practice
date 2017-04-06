@@ -39,7 +39,7 @@ public class ServantDAO{
         Session session = null;
         Servant servant = null;
         session = Hibernate.getSessionFactory().openSession();
-        servant = session.load(Servant.class, servant_id);
+        servant = session.get(Servant.class, servant_id);
         if (session != null && session.isOpen()) {
             session.close();
         }

@@ -39,7 +39,7 @@ public class ClientDAO{
         Session session = null;
         Client client = null;
         session = Hibernate.getSessionFactory().openSession();
-        client = session.load(Client.class, client_id);
+        client = session.get(Client.class, client_id);
         if (session != null && session.isOpen()) {
             session.close();
         }

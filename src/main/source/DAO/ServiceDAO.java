@@ -35,7 +35,7 @@ public class ServiceDAO {
         Session session = null;
         Service service = null;
         session = Hibernate.getSessionFactory().openSession();
-        service = session.load(Service.class, service_id);
+        service = session.get(Service.class, service_id);
         if (session != null && session.isOpen()) {
             session.close();
         }

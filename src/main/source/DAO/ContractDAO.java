@@ -35,7 +35,7 @@ public class ContractDAO {
         Session session = null;
         Contract contract = null;
         session = Hibernate.getSessionFactory().openSession();
-        contract = session.load(Contract.class, contract_id);
+        contract = session.get(Contract.class, contract_id);
         if (session != null && session.isOpen()) {
             session.close();
         }

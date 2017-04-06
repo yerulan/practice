@@ -35,7 +35,7 @@ public class ContactDAO {
         Session session = null;
         Contact contact = null;
         session = Hibernate.getSessionFactory().openSession();
-        contact = session.load(Contact.class, contact_id);
+        contact = session.get(Contact.class, contact_id);
         if (session != null && session.isOpen()) {
             session.close();
         }
