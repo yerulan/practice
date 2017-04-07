@@ -20,18 +20,35 @@ public class ServantTest {
     private ServantDAO servantDAO = Factory.getInstance().getServantDAO();
     @Test
     public void TestServant() throws Exception {
-        //Методы add*, update*, get*ByID,
-        //delete*, getAll*s - такие же как и у ClientDAO
 
         ClientDAO clientDAO = Factory.getInstance().getClientDAO();
         ServiceDAO serviceDAO = Factory.getInstance().getServiceDAO();
 
         Collection servants;
         Collection<String> servants_names = new HashSet<String>();
+        Servant servant = new Servant();
+        servant.setName("Harold Black");
+        servantDAO.addServant(servant);
+        Assert.assertEquals(servantDAO.getServantById(6).getName(), "Harold Black");
+
+        servant = servantDAO.getServantById(5);
+        servant.setName("Alex Ward");
+        servantDAO.updateServant(5, servant);
+        Assert.assertEquals(servantDAO.getServantById(5).getName(), "Alex Ward");
+        servant.setName("Jane Jones");
+        servantDAO.updateServant(5, servant);
+
+        servantDAO.deleteServant(servantDAO.getServantById(6));
+        Assert.assertNull(servantDAO.getServantById(6));
+        servants = servantDAO.getAllServants();
+        for (Iterator<Servant> iterator = servants.iterator(); iterator.hasNext(); )
+            servants_names.add(iterator.next().getName());
+        Assert.assertTrue(servants_names.contains("Jane Jones"));
 
         Date time_start = new Date(116, 4, 15, 13, 5, 40),
                 time_end = new Date(116, 8, 20, 6, 9, 49);
         servants = servantDAO.getServantsByTime(time_start, time_end);
+        servants_names.clear();
         for (Iterator<Servant> iterator = servants.iterator(); iterator.hasNext(); )
             servants_names.add(iterator.next().getName());
         //Среди этих служащих должна быть "Jane Jones"

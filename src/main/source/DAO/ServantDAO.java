@@ -14,7 +14,7 @@ import java.util.List;
 public class ServantDAO{
 
     public void addServant(Servant servant) throws SQLException {
-        Session session = null;
+        Session session;
         session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(servant);
@@ -25,7 +25,7 @@ public class ServantDAO{
     }
 
     public void updateServant(int servant_id, Servant servant) throws SQLException {
-        Session session = null;
+        Session session;
         session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
         session.update(servant);
@@ -36,8 +36,8 @@ public class ServantDAO{
     }
 
     public Servant getServantById(int servant_id) throws SQLException {
-        Session session = null;
-        Servant servant = null;
+        Session session;
+        Servant servant;
         session = Hibernate.getSessionFactory().openSession();
         servant = session.get(Servant.class, servant_id);
         if (session != null && session.isOpen()) {
@@ -47,7 +47,7 @@ public class ServantDAO{
     }
 
     public Collection getAllServants() throws SQLException {
-        Session session = null;
+        Session session;
         List servants;
         session = Hibernate.getSessionFactory().openSession();
         servants = session.createQuery("from Servant").list();
@@ -58,7 +58,7 @@ public class ServantDAO{
     }
 
     public void deleteServant(Servant servant) throws SQLException {
-        Session session = null;
+        Session session;
         session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
         session.delete(servant);
@@ -69,7 +69,7 @@ public class ServantDAO{
     }
 
     public Collection getServantsByTime(Date time_start, Date time_end) throws SQLException {
-        Session session = null;
+        Session session;
         List servants;
         session = Hibernate.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -87,7 +87,7 @@ public class ServantDAO{
     }
 
     public Collection getServantsByClient(Client client){
-        Session session = null;
+        Session session;
         List servants;
         session = Hibernate.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -102,7 +102,7 @@ public class ServantDAO{
     }
 
     public Collection getServantsByService(Service service){
-        Session session = null;
+        Session session;
         List servants;
         session = Hibernate.getSessionFactory().getCurrentSession();
         session.beginTransaction();

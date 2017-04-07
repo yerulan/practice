@@ -28,7 +28,6 @@ public class ClientTest {
         Client client = new Client();
         client.setName("Harold Black");
         clientDAO.addClient(client);
-        clientDAO.getClientById(7);
         Assert.assertEquals(clientDAO.getClientById(7).getName(), "Harold Black");
 
         client = clientDAO.getClientById(6);
